@@ -1,0 +1,26 @@
+{
+  "name": "npx-card-template",
+  "version": "1.0.0",
+  "description": "Terminal tool to create npx card templates.",
+  "type": "module",
+  "scripts": {
+    "prepublish": "npm run build",
+    "build": "node build.js",
+    "dev": "npm run build && node ./bin/card.js",
+    "lint": "standard"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aaishikasb/HacksForHackers.git"
+  },
+  "author": "aaishikasb, cdhiraj40",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/aaishikasb/HacksForHackers/issues"
+  },
+  "homepage": "https://github.com/aaishikasb/HacksForHackers#readme",
+  "dependencies": {
+    "boxen": "^7.1.1",
+    "chalk": "^5.3.0"
+  }
+}
