@@ -1,4 +1,4 @@
-// #!/usr/bin/env node
+#!/usr/bin/env node
 
 import chalk from "chalk";
 import inquirer from "inquirer";
@@ -91,109 +91,47 @@ import boxen from "boxen";
     labelWeb: chalk.bold("Website:"),
     labelResume: chalk.bold("Resume:"),
   };
-  const newline = "\n";
-  const introduction = `${data.intro}`;
-  const working = `${data.labelWork}  ${data.work}`;
-  const twittering = `${data.labelTwitter}  ${data.twitter}`;
-  const githubing = `${data.labelGitHub}  ${data.github}`;
-  const linkedining = `${data.labelLinkedIn}  ${data.linkedin}`;
-  const youtubing = `${data.labelYouTube}  ${data.youtube}`;
-  const webing = `${data.labelWeb}  ${data.web}`;
-  const resuming = `${data.labelResume}  ${data.resume}`;
 
-  let output = "";
-  let fileOutput = `
-  import chalk from "chalk";\n 
-  import boxen from "boxen";\n\n
-  const options = ${JSON.stringify(options)};\n
-  const answers = ${JSON.stringify(answers)};\n
-  const data = ${JSON.stringify(data)};\n
-  const newline = "\\n";\n
-  const introduction = \`\${data.intro}\`;\n
-  const working = \`\${data.labelWork}  \${data.work}\`;\n
-  const twittering = \`\${data.labelTwitter}  \${data.twitter}\`;\n
-  const githubing = \`\${data.labelGitHub}  \${data.github}\`;\n
-  const linkedining = \`\${data.labelLinkedIn}  \${data.linkedin}\`;\n
-  const youtubing = \`\${data.labelYouTube}  \${data.youtube}\`;\n
-  const webing = \`\${data.labelWeb}  \${data.web}\`;\n
-  const resuming = \`\${data.labelResume}  \${data.resume}\`;\n
-  let output = "";\n
-  \n
-  if (answers.name) {
-    output += introduction + newline + newline;
-  }\n
-
-  if (answers.job_title && answers.workplace) {
-    output += working + newline;
-  }\n
-
-  if (answers.twitter) {
-    output += twittering + newline;
-  }\n
-
-  if (answers.github) {
-    output += githubing + newline;
-  }\n
-
-  if (answers.linkedin) {
-    output += linkedining + newline;
-  }\n
-
-  if (answers.youtube) {
-    output += youtubing + newline;
-  }\n
-
-  if (answers.website) {
-    output += webing + newline;
-  }\n
-
-  if (answers.resume) {
-    output += resuming + newline;
-  }\n
-  \nconsole.log(chalk.white(boxen(output, options)));\n
-  `;
-
-  if (answers.name) {
-    output += introduction + newline + newline;
-  }
-
-  if (answers.job_title && answers.workplace) {
-    output += working + newline;
-  }
-
-  if (answers.twitter) {
-    output += twittering + newline;
-  }
-
-  if (answers.github) {
-    output += githubing + newline;
-  }
-
-  if (answers.linkedin) {
-    output += linkedining + newline;
-  }
-
-  if (answers.youtube) {
-    output += youtubing + newline;
-  }
-
-  if (answers.website) {
-    output += webing + newline;
-  }
-
-  if (answers.resume) {
-    output += resuming + newline;
-  }
+  const output = [
+    data.intro,
+    `${data.labelWork} ${data.work}`,
+    `${data.labelTwitter} ${data.twitter}`,
+    `${data.labelGitHub} ${data.github}`,
+    `${data.labelLinkedIn} ${data.linkedin}`,
+    `${data.labelYouTube} ${data.youtube}`,
+    `${data.labelWeb} ${data.web}`,
+    `${data.labelResume} ${data.resume}`,
+  ]
+    .filter(Boolean)
+    .join("\n\n");
 
   console.log("Template Created");
   console.log("Card.js has been created and contains this profile.");
   console.log("Run `node card.js` to see your profile card.");
   console.log(chalk.white(boxen(output, options)));
 
+  const fileOutput = `
+    import chalk from "chalk";
+    import boxen from "boxen";
 
-  await writeFile(fileOutput);
+    const options = ${JSON.stringify(options)};
+    const data = ${JSON.stringify(data)};
+
+    const output = [
+      data.intro,
+      \`\${data.labelWork} \${data.work}\`,
+      \`\${data.labelTwitter} \${data.twitter}\`,
+      \`\${data.labelGitHub} \${data.github}\`,
+      \`\${data.labelLinkedIn} \${data.linkedin}\`,
+      \`\${data.labelYouTube} \${data.youtube}\`,
+      \`\${data.labelWeb} \${data.web}\`,
+      \`\${data.labelResume} \${data.resume}\`,
+    ]
+      .filter(Boolean)
+      .join("\\n\\n");
+
+    console.log(chalk.white(boxen(output, options)));
+  `;
+
+  fs.writeFileSync("./card.js", fileOutput);
 })();
-
-function writeFile(content) {
-  fs.writeFileSync("./card.js", content);
-}
